@@ -1,29 +1,55 @@
 package com.driver.model;
 
-
-
-import org.hibernate.annotations.WhereJoinTable;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table
-
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int driverId;
+
     private String mobile;
     private String password;
+
     @OneToOne
     @JoinColumn
     private Cab cab;
-    @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
-    private List<TripBooking> tripBookingList=new ArrayList<>();
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    List<TripBooking> tripBookingList = new ArrayList<>();
+
+    public List<TripBooking> getTripBookingList() {
+        return tripBookingList;
+    }
+
+    public void setTripBookingList(List<TripBooking> tripBookingList) {
+        this.tripBookingList = tripBookingList;
+    }
+
+    public Driver(int driverId, String mobile, String password, Cab cab) {
+        this.driverId = driverId;
+        this.mobile = mobile;
+        this.password = password;
+        this.cab = cab;
+    }
 
     public Driver() {
+    }
+
+    public Driver(String mobile, String password) {
+        this.mobile = mobile;
+        this.password = password;
+    }
+
+    public int getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(int driverId) {
+        this.driverId = driverId;
     }
 
     public String getMobile() {
@@ -48,26 +74,5 @@ public class Driver {
 
     public void setCab(Cab cab) {
         this.cab = cab;
-    }
-
-    public List<TripBooking> getTripBookingList() {
-        return tripBookingList;
-    }
-
-    public void setTripBookingList(List<TripBooking> tripBookingList) {
-        this.tripBookingList = tripBookingList;
-    }
-
-    public int getDriverId() {
-        return driverId;
-    }
-
-    public void setDriverId(int driverId) {
-        this.driverId = driverId;
-    }
-
-    public Driver(String mobile, String password) {
-        this.mobile = mobile;
-        this.password = password;
     }
 }
